@@ -1,0 +1,73 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Users</h1>
+
+<div class="row">
+ <div class="col-md-4">
+  <select class="form-control" id="role_select">
+    <option value>select role</option>
+    <% @roles.each do |r| %>
+      <option value="<%= r.name %>"><%= r.name %></option>
+    <% end %>
+  </select>
+  </div>
+  <div class="col-md-4">
+  <%= link_to 'New User', new_user_path, class:'btn btn-info' %>
+  </div>
+  <div class="col-md-4">
+    <%= link_to 'home', root_path, class:'btn btn-info' %>
+  </div>
+</div></br>
+
+<div class="row">
+<table class="table table-bordered" id="users_table" style="width:100%">
+  <thead>
+    <tr>
+      <th> first name</th>
+      <th> last name</th>
+      <th> email </th>
+      <th> role </th>
+      <th> images </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><a href="/users/<%= user.id%>/edit"><%= user.first_name %></a></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.role %></td>
+        <td>
+          <% if user.images.attached? %>
+           <a href="/users/<%= user.id%>/images">Images link</a>
+           <% else %>
+            No images
+           <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+</div>
+<script>
+  $(document).ready( function () {
+    $('#users_table').DataTable(
+      {
+        "bFilter":false,
+        "searching": true,
+        "dom": 't',
+        "columnDefs": [
+            { "searchable": false, "targets": -1 },
+            {"orderable": false, "targerts": -1}
+        ]
+      }
+    );
+    $('#users_table_wrapper').css({height: '100%', width: '100%'})
+    } );
+    $('#role_select').on( 'change', function () {
+    $('#users_table').DataTable().search(this.value ).draw();
+} );
+</script>

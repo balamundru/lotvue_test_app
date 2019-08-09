@@ -1,0 +1,59 @@
+<style>
+  .active_status{
+    display: none;
+  }
+</style>
+
+
+<p id="notice"><%= notice %></p>
+
+<h1>Roles</h1>
+<div class="row">
+  <div class="col-md-4">
+    <button class="btn btn-info" onClick="showCheckboxes()">Hide roles</button>
+  </div>
+  <div class="col-md-4">
+   <%= link_to 'New Role', new_role_path, class:'btn btn-info' %>
+  </div>
+  <div class="col-md-4">
+    <%= link_to "Home", root_path, class:'btn btn-info' %>
+  </div>
+</div></br>
+<table class="table bordered">
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th class="active_status">Inactive</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @roles.each do |role| %>
+      <tr id="role_table_data_<%= role.id%>">
+        <td><%= role.name %></td>
+        <td class="active_status">
+        <input class="form-check-input" type="checkbox" <%= role.active ? 'unchecked' : 'checked' %> value="<%= role.id%>" id="role_<%= role.id%>" onClick="updateActiveStatus($(this))">
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<script>
+  function showCheckboxes(){
+    $('.active_status').css({'display': 'block'});
+  }
+
+  function updateActiveStatus(el){
+    var id = $(el).attr('value');
+    if(id){
+      $.ajax({
+        url: '/roles/'+id,
+        dataType: 'script',
+        method: 'patch',
+        data: {role:{active: !$(el).prop('checked')}}
+      })
+    }
+  }
+</script>

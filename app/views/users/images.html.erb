@@ -1,0 +1,14 @@
+<div class="row">
+  <%= link_to "Show Users", users_url, class:'btn btn-info' %>
+</div></br>
+<div class="row">
+<% @user.images.each do |image| %>
+  <div class="form-group">
+  <% if image.image? %>
+   <%= image_tag image %>
+   <% else %>
+    <%= link_to "Download", rails_blob_path(image,disposition: :attachment) %>
+   <% end %>
+  </div>
+<% end %>
+</div>

@@ -1,0 +1,62 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label for="first_name">First Name</label>
+    <%= form.text_field :first_name, class:"form-control", placeholder:"Enter first name" %>
+  </div>
+  <div class="form-group">
+    <label for="last_name">Last Name</label>
+    <%= form.text_field :last_name, class:"form-control", placeholder:"Enter last name" %>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <%= form.text_field :email, class:"form-control", placeholder:"Enter email" %>
+  </div>
+  <div class="form-group">
+    <label for="role">Role</label>
+    <%= form.select(:role_id,@roles.collect{|r| [r.name, r.id]}, {include_blank: 'select role'}, {class: "form-control", required: true}) %>
+  </div>
+  <div class="form-group">
+      <label for="role">Upload files</label>
+      <%= form.file_field :images, multiple: true %>
+  </div>
+  <div id="extra_fields" class="form-group">
+   <%= form.fields_for :user_extra_datums do |field| %>
+    <%= render 'fields', form: field %>
+   <% end %>
+  </div>
+  <div class="form-group">
+    <button type="button" class="btn btn-primary" onClick="appendExtraFields()">Add Meta Fields</button></br>
+  </div>
+  <div class="actions">
+    <%= form.submit "create",  class:"btn btn-success" %>
+    <%= link_to 'Users list', users_url, class:"btn btn-info" %>
+  </div>
+<% end %>
+<script>
+function appendExtraFields(){
+  var i = new Date().getTime();
+   html = '';
+   html += "<div class='form-group'>";
+   html += "<label>Field Name</label>"
+   html += "<input type='text' class='form-control' name='user[user_extra_datums_attributes]["+i+"][field_name]' placeholder='enter field name' required>";
+   html += '</div>'
+   html += "<div class='form-group'>"
+   html += "<label>Field Value</label>"
+   html += "<input type='text' class='form-control' name='user[user_extra_datums_attributes]["+i+"][field_value]' placeholder='enter field value' required>";
+   html += "</div>";
+   $('#extra_fields').append(html);
+  }
+</script>
+
