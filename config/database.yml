@@ -20,7 +20,7 @@ test:
   database: db/test.sqlite3
 
 production:
-  dapter: postgresql
+  adapter: postgresql
   encoding: unicode
   database: sample_postgres
   pool: 5
