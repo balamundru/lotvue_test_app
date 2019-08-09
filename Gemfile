@@ -39,6 +39,10 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
 end
 
+group :production do
+  gem 'pg', '~> 0.18'
+end
+
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'

@@ -20,5 +20,9 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  dapter: postgresql
+  encoding: unicode
+  database: sample_postgres
+  pool: 5
+  username: sample_postgres
+  password: balu678
