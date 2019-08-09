@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @roles = Role.where(active: true)
-    @users = User.where(role_id: @roles.ids)
+    @users = User.where(role_id: @roles.ids) if @roles.present?
   end
 
   # GET /users/1

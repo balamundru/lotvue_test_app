@@ -35,7 +35,7 @@
         <input class="form-check-input" type="checkbox" <%= role.active ? 'unchecked' : 'checked' %> value="<%= role.id%>" id="role_<%= role.id%>" onClick="updateActiveStatus($(this))">
         </td>
       </tr>
-    <% end %>
+    <% end if @roles.present? %>
   </tbody>
 </table>
 
